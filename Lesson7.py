@@ -223,10 +223,6 @@ with open("max_file_size.txt", 'r') as f:
 
 max_el = int(max_el)
 
-
-if (os.path.isfile("file_list.txt")):
-    os.remove("file_list.txt")
-
 def walk_by_folders(work_dir):
 
     for dir in os.listdir(work_dir):
@@ -259,8 +255,7 @@ while file_size_step_max <= max_el:
             item = item.replace('\n','')
             if os.stat(item).st_size < file_size_step_max and os.stat(item).st_size >= file_size_step_min:
                 count += 1
-                ext_list_temp = item.split('.')
-                filename, file_extension = os.path.splitext(item)
+                _, file_extension = os.path.splitext(item)
                 ext_list.append(file_extension)
                 files_dict[file_size_step_max] = (count, list(set(ext_list)))
 
@@ -277,3 +272,9 @@ print(f'\nСодержимое json файла:\n{json_string}')
 
 with open('folder_stat.json', 'r', encoding='UTF-8') as res_f:
     print(f"Считали файл json:\n{json.load(res_f)}")
+
+if (os.path.isfile("file_list.txt")):
+    os.remove("file_list.txt")
+
+if (os.path.isfile("max_file_size.txt")):
+    os.remove("max_file_size.txt")
